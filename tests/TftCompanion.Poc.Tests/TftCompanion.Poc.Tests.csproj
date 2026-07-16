@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -10,5 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\TftCompanion.Poc.Core\TftCompanion.Poc.Core.csproj" />
     <ProjectReference Include="..\..\src\TftCompanion.Poc.Host\TftCompanion.Poc.Host.csproj" />
+    <ProjectReference Include="..\..\src\TftCompanion.SecondScreen\TftCompanion.SecondScreen.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>TftCompanion.SecondScreen</AssemblyName>
+    <RootNamespace>TftCompanion.SecondScreen</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TftCompanion.Poc.Core\TftCompanion.Poc.Core.csproj" />
+  </ItemGroup>
+</Project>

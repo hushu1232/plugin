@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>TftCompanion.Poc.Core</AssemblyName>
+    <RootNamespace>TftCompanion.Poc.Core</RootNamespace>
+  </PropertyGroup>
+</Project>

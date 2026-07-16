@@ -2313,6 +2313,8 @@ Create README.md with this exact acceptance checklist. Leave every checkbox unch
 ~~~markdown
 # TFT Companion v0.0.1 Runtime Compatibility PoC
 
+> **迁移说明（2026-07-14）**：本计划早于工程迁移撰写，文中的 `D:\FOXD\tft-companion`、`D:\FOXD` 和相对 `tft-companion/` 路径均为历史叙述。当前唯一工程根是 `D:\TFTCompanion`；不得在 `D:\FOXD` 再创建第二份项目。后续实现以当前仓库、当前运行手册和已验证的 v0.0.1 合同为准。
+
 ## Local automated gate
 
 - [ ] .NET 9 solution builds with C:\Users\hu shu\.dotnet\dotnet.exe.

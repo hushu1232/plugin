@@ -1,0 +1,33 @@
+{
+  "manifest_version": 4,
+  "type": "background_app",
+  "name": "TFT Companion PoC",
+  "author": "TFT Companion",
+  "version": "0.0.1",
+  "game_id": 21570,
+  "game_events": [21570],
+  "permissions": {
+    "game_info": true,
+    "websocket": true
+  },
+  "background_apps": {
+    "tft-companion-poc-bridge": {
+      "start_page": "background-bridge.html",
+      "activate_on_events": ["GameInfoUpdated"]
+    }
+  },
+  "windows": {
+    "renderer": {
+      "file": "renderer.html",
+      "transparent": true,
+      "resizable": false,
+      "show_in_taskbar": false,
+      "disable_window_resize": true,
+      "topmost": true,
+      "clickthrough": true,
+      "force_capture_on_focus": false,
+      "show_minimize": false,
+      "show_maximize": false
+    }
+  }
+}

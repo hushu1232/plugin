@@ -32,3 +32,7 @@ appsettings.Local.json
 *.tmp
 *.bak
 .local/
+
+# Overwolf local development settings (machine-specific, may contain pairing tokens)
+/overwolf/tft-companion-poc/dev-settings.local.js
+/overwolf/tft-companion-poc/dev-settings.local.json

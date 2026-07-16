@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TftCompanion.Poc.Core/TftCompanion.Poc.Core.csproj" />
+    <Project Path="src/TftCompanion.Poc.Host/TftCompanion.Poc.Host.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TftCompanion.Poc.Tests/TftCompanion.Poc.Tests.csproj" />
+  </Folder>
+</Solution>

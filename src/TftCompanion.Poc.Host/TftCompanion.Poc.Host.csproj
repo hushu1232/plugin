@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <AssemblyName>TftCompanion.Poc.Host</AssemblyName>
+    <RootNamespace>TftCompanion.Poc.Host</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TftCompanion.Poc.Core\TftCompanion.Poc.Core.csproj" />
+  </ItemGroup>
+</Project>

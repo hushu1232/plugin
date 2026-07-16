@@ -1,0 +1,9 @@
+{
+  "name": "tft-companion-poc",
+  "version": "0.0.1",
+  "private": true,
+  "description": "TFT Companion Runtime Compatibility PoC - Overwolf side",
+  "scripts": {
+    "test": "node --test ../../tests/overwolf/static-boundary-check.js ../../tests/overwolf/render-identity.test.js ../../tests/overwolf/pairing-token-canonical.test.js && node ../../tests/overwolf/renderer-bridge-restart-test.js"
+  }
+}

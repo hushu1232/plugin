@@ -1,0 +1,91 @@
+<Window x:Class="TftCompanion.SecondScreen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:TftCompanion.Poc.Core.LocalSimulation;assembly=TftCompanion.Poc.Core"
+        Title="TFT Companion 路 Manual / FixtureOnly"
+        Width="980" Height="620" MinWidth="760" MinHeight="480">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+            <Label Content="Topic" />
+            <ComboBox ItemsSource="{Binding Topics}" SelectedItem="{Binding SelectedTopic}" />
+
+            <Label Content="Intent" Margin="0,12,0,0" />
+            <ComboBox ItemsSource="{Binding Intents}" SelectedItem="{Binding SelectedIntent}" />
+
+            <StackPanel>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedTopic}" Value="{x:Static core:ManualTopic.LossStreakReview}">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Label Content="Health band" Margin="0,12,0,0" />
+                <ComboBox ItemsSource="{Binding RiskBands}" SelectedItem="{Binding SelectedHealthBand}" />
+            </StackPanel>
+
+            <Label Content="Gold band" Margin="0,12,0,0" />
+            <ComboBox ItemsSource="{Binding RiskBands}" SelectedItem="{Binding SelectedGoldBand}" />
+
+            <StackPanel>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedTopic}" Value="{x:Static core:ManualTopic.RerollReview}">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Label Content="Copies band" Margin="0,12,0,0" />
+                <ComboBox ItemsSource="{Binding CopiesBands}" SelectedItem="{Binding SelectedCopiesBand}" />
+            </StackPanel>
+
+            <StackPanel>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedTopic}" Value="{x:Static core:ManualTopic.RerollReview}">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Label Content="Unit cost band" Margin="0,12,0,0" />
+                <ComboBox ItemsSource="{Binding UnitCostBands}" SelectedItem="{Binding SelectedUnitCostBand}" />
+            </StackPanel>
+
+            <WrapPanel Margin="0,20,0,0">
+                <Button Content="Start New Session" Command="{Binding StartNewSessionCommand}" Margin="0,0,8,8" />
+                <Button Content="Submit Checkpoint" Command="{Binding SubmitCheckpointCommand}" Margin="0,0,8,8" />
+                <Button Content="Clear Current Advice" Command="{Binding ClearCurrentAdviceCommand}" Margin="0,0,8,8" />
+                <Button Content="Enable D: Recovery" Command="{Binding EnableDDriveRecoveryCommand}" Margin="0,0,8,8" />
+            </WrapPanel>
+        </StackPanel>
+
+        <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="16" Margin="12,0,0,0">
+            <StackPanel>
+                <Label Content="Session status" FontWeight="SemiBold" />
+                <Label Content="{Binding StatusText}" />
+                <TextBlock Text="{Binding AdviceText}"
+                           Visibility="{Binding IsCurrentAdviceVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           TextWrapping="Wrap"
+                           FontSize="18"
+                           Margin="0,16,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

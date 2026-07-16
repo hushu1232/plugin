@@ -553,6 +553,81 @@ public sealed class LocalCompanionSimulationTests
     }
 
     [Test]
+    public void restored_cleared_terminal_state_preserves_high_water_and_requires_a_newer_revision()
+    {
+        LocalAdviceCoordinator coordinator = new();
+
+        Assert.That(
+            coordinator.TryRestoreTerminalState(
+                RunA,
+                highWaterRevision: 7,
+                LocalAdvicePhase.Cleared),
+            Is.True);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(coordinator.Current, Is.Null);
+            Assert.That(coordinator.LastPhase, Is.EqualTo(LocalAdvicePhase.Cleared));
+            Assert.That(coordinator.TryAccept(BuildCurrent(RunA, revision: 7)), Is.False);
+            Assert.That(coordinator.TryAccept(BuildCurrent(RunA, revision: 8)), Is.True);
+        });
+    }
+
+    [Test]
+    public void restored_terminal_run_is_retired_after_a_different_run_becomes_current()
+    {
+        LocalAdviceCoordinator coordinator = new();
+
+        Assert.That(
+            coordinator.TryRestoreTerminalState(
+                RunA,
+                highWaterRevision: 4,
+                LocalAdvicePhase.Expired),
+            Is.True);
+
+        Assert.That(coordinator.TryAccept(BuildCurrent(RunB, revision: 1)), Is.True);
+
+        Assert.That(coordinator.TryAccept(BuildCurrent(RunA, revision: 5)), Is.False);
+    }
+
+    [TestCase(LocalAdvicePhase.Current)]
+    [TestCase(LocalAdvicePhase.Unknown)]
+    [TestCase(LocalAdvicePhase.Degraded)]
+    [TestCase(LocalAdvicePhase.Superseded)]
+    public void terminal_restore_rejects_nonterminal_phase(LocalAdvicePhase phase)
+    {
+        LocalAdviceCoordinator coordinator = new();
+
+        Assert.That(
+            coordinator.TryRestoreTerminalState(
+                RunA,
+                highWaterRevision: 1,
+                phase),
+            Is.False);
+    }
+
+    [Test]
+    public void terminal_restore_does_not_displace_a_live_current_advice()
+    {
+        LocalAdviceCoordinator coordinator = new();
+        Assert.That(coordinator.TryAccept(BuildCurrent(RunA, revision: 1)), Is.True);
+
+        bool restored = coordinator.TryRestoreTerminalState(
+            RunB,
+            highWaterRevision: 1,
+            LocalAdvicePhase.Cleared);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(restored, Is.False);
+            Assert.That(coordinator.Current, Is.Not.Null);
+            Assert.That(coordinator.Current!.ManualRunId, Is.EqualTo(RunA));
+            Assert.That(coordinator.Current.ManualRevision, Is.EqualTo(1));
+            Assert.That(coordinator.LastPhase, Is.EqualTo(LocalAdvicePhase.Current));
+        });
+    }
+
+    [Test]
     public void expression_skill_renders_current_advice_with_messagekey_digest_and_skillversion()
     {
         SemanticAdvice advice = BuildCurrent(RunA, revision: 1);

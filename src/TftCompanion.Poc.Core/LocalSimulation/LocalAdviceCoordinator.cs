@@ -91,4 +91,36 @@ public sealed class LocalAdviceCoordinator
         LastPhase = LocalAdvicePhase.Expired;
         return expired;
     }
+
+    public bool TryRestoreTerminalState(
+        Guid manualRunId,
+        long highWaterRevision,
+        LocalAdvicePhase phase)
+    {
+        if (Current is not null ||
+            manualRunId == Guid.Empty ||
+            highWaterRevision <= 0 ||
+            phase is not (LocalAdvicePhase.Cleared or LocalAdvicePhase.Expired) ||
+            _retiredRuns.Contains(manualRunId))
+        {
+            return false;
+        }
+
+        if (_highWaterByRun.TryGetValue(manualRunId, out long knownHighWater) &&
+            highWaterRevision < knownHighWater)
+        {
+            return false;
+        }
+
+        if (_activeRunId is Guid activeRunId && activeRunId != manualRunId)
+        {
+            _retiredRuns.Add(activeRunId);
+        }
+
+        _highWaterByRun[manualRunId] = highWaterRevision;
+        _activeRunId = manualRunId;
+        Current = null;
+        LastPhase = phase;
+        return true;
+    }
 }
